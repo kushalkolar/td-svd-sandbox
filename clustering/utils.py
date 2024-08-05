@@ -81,8 +81,9 @@ def generate_data(
 
     bg_pixels = [np.random.normal(scale=noise, size=n_timepoints) for i in range(n_pixels_bg)]
     series = np.vstack([*series, *bg_pixels])
+    labels = np.array([*labels, *[0 for i in range(len(bg_pixels))]])
 
-    return series
+    return series, labels
 
 
 class SpaceTimeSVD:
