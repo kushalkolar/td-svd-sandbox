@@ -1,7 +1,7 @@
 from itertools import product
 import numpy as np
 from scipy.linalg import qr, svd, hankel
-from scipy.sparse.linalg import svds
+from scipy.sparse.linalg import svds, eigsh
 from tqdm import tqdm
 
 
@@ -145,7 +145,7 @@ class ClusteringCPQR:
     def __init__(self, adjacency: np.ndarray, k: int):
         self.k = k
         self.B = np.abs(adjacency + adjacency.T) / 2
-        self.evals, self.evecs = np.linalg.eigh(self.B)
+        self.evals, self.evecs = eigsh(self.B, k=self.k)
 
         self.Qk = self.evecs[:, -self.k:]
 
